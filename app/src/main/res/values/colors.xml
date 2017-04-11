@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="reflectionsBackground">#eceff1</color>
+    <color name="headingBackground"> #607d8b</color>
+    <color name="sourceBackground">#90a4ae</color>
+    <color name="sourcebookBackground">#607d8b</color>
+    <color name="generalText">#78909c</color>
+    <color name="footerText">#607d8b</color>
+    <color name="whiteText">#ffffff</color>
+    <color name="my_custom_color">#ff1a557c</color>
+
+    <color name="black_overlay">#66000000</color>
+</resources>

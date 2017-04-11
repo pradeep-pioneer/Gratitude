@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvGroupName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:text="Group"
+        android:textStyle="bold"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/tvAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:text="Address: " />
+
+    <TextView
+        android:id="@+id/tvArea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:text="Area: " />
+
+    <TextView
+        android:id="@+id/tvState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:text="State: " />
+
+    <TextView
+        android:id="@+id/tvPostCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:text="Post Code: " />
+
+    <TextView
+        android:id="@+id/tvDayTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:text="Day/Time: " />
+    <TextView
+        android:id="@+id/tvContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:text="Contact: " />
+
+    <TextView
+        android:id="@+id/tvDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:text="Distance(Approx.): " />
+</LinearLayout>

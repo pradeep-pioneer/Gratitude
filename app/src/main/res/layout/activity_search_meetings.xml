@@ -1,0 +1,62 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}">
+    <RelativeLayout
+        android:background="@android:color/holo_blue_light"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="Find Meetings"
+            android:textSize="22dp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="5dp"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:visibility="visible"
+        android:background="@android:color/darker_gray"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_margin="20dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <RadioGroup
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+    <RadioButton
+        android:id="@+id/rbLocation"
+        android:text="By Location"
+        android:onClick="onLocationClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RadioButton
+        android:id="@+id/rbKeywords"
+        android:text="By Keywords"
+        android:onClick="onKeywordsClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+        </RadioGroup>
+    <EditText
+        android:id="@+id/etKeywords"
+        android:text=""
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/buttonFind"
+        android:text="Find Meetings"
+        android:onClick="findMeetingsAction"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

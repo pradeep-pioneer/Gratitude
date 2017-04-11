@@ -1,0 +1,100 @@
+<ScrollView
+    android:id="@+id/svHome"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/headingBackground">
+    <LinearLayout
+        android:id="@+id/llMainContainer"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <RelativeLayout
+            android:background="@android:color/holo_blue_light"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Attitude of Gratitude"
+                android:textSize="22dp"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="5dp"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:visibility="visible"
+            android:background="@android:color/darker_gray"/>
+        <TextView
+            android:id="@+id/textViewQuote"
+            android:text="Random Quote"
+            android:textSize="20dp"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/buttonDailyReflection"
+            android:onClick="dailyReflectionAction"
+            android:text="Daily Reflection"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+        <Button
+            android:id="@+id/buttonFavouriteReflection"
+            android:text="Favourite Reflections"
+            android:onClick="favoriteReflectionAction"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@+id/buttonAllReflections"
+            android:onClick="allReflectionAction"
+            android:text="All Reflections"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@+id/buttonMeetingLocator"
+            android:text="Find Meetings"
+            android:onClick="findMeetingsAction"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@+id/buttonMeetingBrowser"
+            android:text="Browse Meetings"
+            android:onClick="browseMeetingsAction"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@+id/buttonBigBookManuscript"
+            android:text="Big Book Manuscript"
+            android:onClick="bigBookManuscriptAction"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+    </LinearLayout>
+</ScrollView>
