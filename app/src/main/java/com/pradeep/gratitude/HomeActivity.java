@@ -254,8 +254,11 @@ public class HomeActivity extends Activity {
         meetingActivityIntent.putExtra("Keywords","");
         startActivity(meetingActivityIntent);
     }
-    public void bigBookManuscriptAction(View view){
-        Intent chaptersActivityIntent=new Intent(this,ChaptersActivity.class);
-        startActivity(chaptersActivityIntent);
+
+    public void browseMapAction(View view){
+        Intent mapActivityIntent=new Intent(this,MeetingMapActivity.class);
+        mapActivityIntent.putExtra("Mode",1);
+        mapActivityIntent.putExtra("Keywords","");
+        startActivity(mapActivityIntent);
     }
 }
