@@ -12,4 +12,11 @@
     <string name="title_activity_search_meetings">Search Meetings</string>
     <string name="title_activity_pdf">pdfActivity</string>
     <string name="title_activity_chapters">ChaptersActivity</string>
+    <string name="meetings_url">https://raw.githubusercontent.com/pradeep-pioneer/Gratitude-Data/master/meetingdata.csv</string>
+    <string name="quotes_url">https://raw.githubusercontent.com/pradeep-pioneer/Gratitude-Data/master/quotesprocessed.txt</string>
+    <string name="reflections_url">https://raw.githubusercontent.com/pradeep-pioneer/Gratitude-Data/master/reflections.csv</string>
+    <string name="title_activity_contact_us">Contact Us</string>
+    <string name="contact_us_message">Gratitude is a gesture. This application is dedicated to all those who needs sobriety. This application is strictly non-commercial. You can use the below listed details to contact us for feedback.</string>
+    <string name="contact_us_email"><b>Email: </b> pioneersoft.in@gmail.com</string>
+    <string name="contact_us_disclaimer"><b>Disclaimer: </b><i>This applications is not created by Alcoholics Anonymous and is not endorsed by AA. AA is not associated in any manner in the creation, distribution or maintenance of this application. All queries regarding the information/feedback/concerns should be sent to the email listed above.</i></string>
 </resources>

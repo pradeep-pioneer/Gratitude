@@ -1,12 +1,16 @@
 package com.pradeep.gratitude;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v4.content.ContextCompat;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,7 +32,7 @@ public class MeetingsActivity extends Activity {
         setContentView(R.layout.activity_meetings);
         TextView tvLat=(TextView)findViewById(R.id.tvLat);
         TextView tvLng=(TextView)findViewById(R.id.tvLng);
-
+        TextView tvMeetings = (TextView)findViewById(R.id.tvTotalMeetings);
         Location gps=getGPS();
         if (gps==null){
             Toast.makeText(this, "Please turn on Location!", Toast.LENGTH_LONG).show();
@@ -36,59 +40,41 @@ public class MeetingsActivity extends Activity {
             this.startActivity(myIntent);
             gps=getGPS();
         }
-
         tvLat.setText("Latitude: " + Double.toString(gps.getLatitude()));
         tvLng.setText("Longitude: " + Double.toString(gps.getLongitude()));
-
         meetingLocationsDbHelper helper = new meetingLocationsDbHelper(this);
         final meetingsAdapter adapter;
         Intent intent=getIntent();
         int mode=intent.getIntExtra("Mode",0);
-        if (mode==0)
-            adapter = new meetingsAdapter(helper.getNearbyMeetings(gps,20000));
+        ArrayList<meetingObject> meetings;
+        if (mode==0){
+            meetings = helper.getNearbyMeetings(gps,20000);
+            adapter = new meetingsAdapter(meetings);
+        }
         else {
             String keywords=intent.getStringExtra("Keywords");
-            adapter = new meetingsAdapter(helper.getMeetingsByKeywords(keywords));
+            meetings = helper.getMeetingsByKeywords(keywords);
+            adapter = new meetingsAdapter(meetings);
         }
-            //adapter = new meetingsAdapter(helper.getAllMeetings());
+        tvMeetings.setText("Total Meetings: " + meetings.size());
         ListView list = (ListView) findViewById(R.id.lvMeetings);
         list.setAdapter(adapter);
-    }
-
-    Location getLocation(Location location){
-        Location returnedLocation = location;
-        if (returnedLocation==null){
-            Toast.makeText(this, "Please turn on Location!", Toast.LENGTH_LONG).show();
-            Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            this.startActivity(myIntent);
-            returnedLocation=getGPS();
-        }
-        return returnedLocation;
     }
 
     private Location getGPS() {
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         List<String> providers = lm.getProviders(true);
-
-/* Loop over the array backwards, and if you get an accurate location, then break                 out the loop*/
         Location l = null;
-
         for (int i=providers.size()-1; i>=0; i--) {
             l = lm.getLastKnownLocation(providers.get(i));
             if (l != null) break;
         }
-
-
         return l;
     }
 
     public class meetingsAdapter extends BaseAdapter {
 
         ArrayList<meetingObject> meetingObjectList;
-
-        public meetingsAdapter() {
-            meetingObjectList = new ArrayList<meetingObject>();
-        }
 
         public meetingsAdapter(ArrayList<meetingObject> dataSource) {
             meetingObjectList = dataSource;
@@ -125,10 +111,7 @@ public class MeetingsActivity extends Activity {
 
             TextView tvGroupName=(TextView)arg1.findViewById(R.id.tvGroupName);
             TextView tvAddress=(TextView)arg1.findViewById(R.id.tvAddress);
-            TextView group=(TextView)arg1.findViewById(R.id.tvGroupName);
-            TextView tvArea=(TextView)arg1.findViewById(R.id.tvArea);
-            TextView tvState=(TextView)arg1.findViewById(R.id.tvState);
-            TextView tvPostCode=(TextView)arg1.findViewById(R.id.tvPostCode);
+            TextView tvFormattedAddress=(TextView)arg1.findViewById(R.id.tvFormattedAddress);
             TextView tvDayTime=(TextView)arg1.findViewById(R.id.tvDayTime);
             TextView tvContact=(TextView)arg1.findViewById(R.id.tvContact);
             TextView tvDistance=(TextView)arg1.findViewById(R.id.tvDistance);
@@ -137,12 +120,10 @@ public class MeetingsActivity extends Activity {
 
             tvGroupName.setText(meeting.get_groupName());
             tvAddress.setText(meeting.get_address());
-            tvArea.setText("Area: " + meeting.get_area());
-            tvState.setText("State: " + meeting.get_state());
-            tvPostCode.setText("Post Code: " + meeting.get_postCode());
             tvDayTime.setText("Day/Time: " + meeting.get_dayTime());
             tvContact.setText("Contact: " + meeting.get_contact());
             tvDistance.setText("Distance(Approx.): " + meeting.get_distance());
+            tvFormattedAddress.setText(Html.fromHtml("<b>Full Address:<\\b><br/>" + meeting.get_formattedAddress()));
             return arg1;
         }
     }

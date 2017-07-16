@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.LOCATION_HARDWARE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -22,18 +23,26 @@
         </activity>
         <activity
             android:name=".ReflectionActivity"
-            android:label="@string/title_activity_reflection"></activity>
+            android:label="@string/title_activity_reflection" />
         <activity
             android:name=".FavoriteReflections"
-            android:label="@string/title_activity_favorite_reflections"></activity>
+            android:label="@string/title_activity_favorite_reflections" />
         <activity
             android:name=".MeetingsActivity"
-            android:label="@string/title_activity_meetings"></activity>
+            android:label="@string/title_activity_meetings" />
         <activity
             android:name=".SearchMeetings"
-            android:label="@string/title_activity_search_meetings"></activity>
-        <activity android:name=".MeetingMapActivity"></activity>
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCDPuKr0QlWdWn5vRdiIZAEbgRW63VICU8"/>
+            android:label="@string/title_activity_search_meetings" />
+        <activity android:name=".MeetingMapActivity" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCDPuKr0QlWdWn5vRdiIZAEbgRW63VICU8" />
+
+        <activity
+            android:name=".ContactUsActivity"
+            android:label="@string/title_activity_contact_us"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

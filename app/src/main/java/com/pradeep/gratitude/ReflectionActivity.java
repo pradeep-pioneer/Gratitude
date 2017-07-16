@@ -169,7 +169,7 @@ public class ReflectionActivity extends ActionBarActivity {
         //Set copyright Text
         SpannableString copyrightString=new SpannableString("\nFrom the book Daily Reflections\n" +
                 "Copyright © 1990 by Alcoholics Anonymous World Services, Inc.\n"+
-                "Application Author: Pradeep S");
+                "Application Author: PioneerSoft");
         copyrightString.setSpan(new StyleSpan(Typeface.BOLD_ITALIC), 0, copyrightString.length(), 0);
         copyrightText.setText(copyrightString);
 

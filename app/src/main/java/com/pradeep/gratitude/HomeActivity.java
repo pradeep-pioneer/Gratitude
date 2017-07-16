@@ -12,12 +12,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class HomeActivity extends Activity {
     ProgressDialog barProgressDialog;
@@ -67,39 +74,19 @@ public class HomeActivity extends Activity {
         barProgressDialog.show();
         barProgressDialog.setCancelable(false);
         barProgressDialog.setCanceledOnTouchOutside(false);
-        InputStream stream = getResources().openRawResource(R.raw.output);
-        InputStream meetingStream = getResources().openRawResource(R.raw.meetingdata);
-        InputStream quotesStream = getResources().openRawResource(R.raw.quotesprocessed);
-        final bigBookManuscriptDbHelper bigBookHelper=new bigBookManuscriptDbHelper(this);
-        final BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         final reflectionsDbHelper helper=new reflectionsDbHelper(this);
-        final BufferedReader meetingsReader = new BufferedReader(new InputStreamReader(meetingStream));
-        final BufferedReader quotesReader = new BufferedReader(new InputStreamReader(quotesStream));
         final meetingLocationsDbHelper meetingsHelper=new meetingLocationsDbHelper(this);
         final quotesDbHelper quotesHelper=new quotesDbHelper(this);
-        InputStream bigBookStream = getResources().openRawResource(R.raw.bigbook_output);
-        final BufferedReader bigBookReader = new BufferedReader(new InputStreamReader(bigBookStream));
-        String line;
-        //Read text from file
-        final StringBuilder text = new StringBuilder();
-        try {
-            while ((line = bigBookReader.readLine()) != null) {
-                text.append(line);
-            }
-            bigBookReader.close();
-        }
-        catch (Exception ex){
-
-        }
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     // Here you should write your time consuming task...
                     int count=0;
+                    BufferedReader reflectionReader = getReflectionsDataReader();
                     while (count<366) {
                         try{
-                            String line = reader.readLine();
+                            String line = reflectionReader.readLine();
 
                             while (line != null) {
                                 if (count==0)
@@ -110,7 +97,7 @@ public class HomeActivity extends Activity {
 
                                     count++;
                                 }
-                                line = reader.readLine();
+                                line = reflectionReader.readLine();
                                 updateBarHandler.post(new Runnable() {
                                     public void run() {
                                         barProgressDialog.incrementProgressBy(1);
@@ -122,7 +109,7 @@ public class HomeActivity extends Activity {
                             String message=e.getMessage();
                         }
                         helper.close();
-                        reader.close();
+                        reflectionReader.close();
                         updateBarHandler.post(new Runnable() {
                             public void run() {
                                 barProgressDialog.setProgress(0);
@@ -132,6 +119,7 @@ public class HomeActivity extends Activity {
                             }
                         });
                         count=0;
+                        BufferedReader quotesReader = getQuotesDataReader();
                         while (count<164) {
                             try {
                                 String line = quotesReader.readLine();
@@ -152,35 +140,16 @@ public class HomeActivity extends Activity {
                         updateBarHandler.post(new Runnable() {
                             public void run() {
                                 barProgressDialog.setProgress(0);
-                                barProgressDialog.setMax(16);
-                                barProgressDialog.setTitle("Hang On - Adding Big Book...");
-
-                            }
-                        });
-                        count=0;
-                        String[] chaptersString=text.toString().split("\\~");
-                        while (count<16){
-                            String[] values=chaptersString[count].split("\\|");
-                            bigBookHelper.insertChapter(values[0],values[1]);
-                            count++;
-                            updateBarHandler.post(new Runnable() {
-                                public void run() {
-                                    barProgressDialog.incrementProgressBy(1);
-                                }
-                            });
-                        }
-                        updateBarHandler.post(new Runnable() {
-                            public void run() {
-                                barProgressDialog.setProgress(0);
-                                barProgressDialog.setMax(1646);
+                                barProgressDialog.setMax(1727);
                                 barProgressDialog.setTitle("Hang On - Meetings...");
 
                             }
                         });
                         count=0;
-                        while (count<=1646) {
+                        BufferedReader meetingsDataReader = getMeetingDataReader();
+                        while (count<=1727) {
                             try{
-                                String line = meetingsReader.readLine();
+                                String line = meetingsDataReader.readLine();
 
                                 while (line != null) {
                                     if (count==0)
@@ -190,13 +159,13 @@ public class HomeActivity extends Activity {
                                         meetingsHelper.insertMeeting(meeting);
                                         count++;
                                     }
-                                    line = meetingsReader.readLine();
+                                    line = meetingsDataReader.readLine();
                                     updateBarHandler.post(new Runnable() {
                                         public void run() {
                                             barProgressDialog.incrementProgressBy(1);
                                         }
                                     });
-                                    if(count==1646){
+                                    if(count==1727){
                                         updateBarHandler.post(new Runnable() {
                                             public void run() {
                                                 barProgressDialog.setCancelable(true);
@@ -213,7 +182,7 @@ public class HomeActivity extends Activity {
                             }
                         }
                         meetingsHelper.close();
-                        meetingsReader.close();
+                        meetingsDataReader.close();
 
                     }
                 } catch (Exception e) {
@@ -223,6 +192,54 @@ public class HomeActivity extends Activity {
 
     }
     //End
+
+    public BufferedReader getReflectionsDataReader(){
+        try{
+            String urlText = getString(R.string.reflections_url);
+            URL url = new URL(urlText);
+            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            InputStream stream = new BufferedInputStream(connection.getInputStream());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+            return reader;
+        }
+        catch (Exception ex){
+            InputStream meetingStream = getResources().openRawResource(R.raw.output);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(meetingStream));
+            return reader;
+        }
+    }
+
+    public BufferedReader getMeetingDataReader(){
+        try{
+            String urlText = getString(R.string.meetings_url);
+            URL url = new URL(urlText);
+            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            InputStream stream = new BufferedInputStream(connection.getInputStream());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+            return reader;
+        }
+        catch (Exception ex){
+            InputStream meetingStream = getResources().openRawResource(R.raw.meetingdata);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(meetingStream));
+            return reader;
+        }
+    }
+
+    public BufferedReader getQuotesDataReader(){
+        try{
+            String urlText = getString(R.string.quotes_url);
+            URL url = new URL(urlText);
+            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            InputStream stream = new BufferedInputStream(connection.getInputStream());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+            return reader;
+        }
+        catch (Exception ex){
+            InputStream meetingStream = getResources().openRawResource(R.raw.quotesprocessed);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(meetingStream));
+            return reader;
+        }
+    }
 
     public void dailyReflectionAction(View view){
         Intent reflectionIntent=new Intent(this,ReflectionActivity.class);
@@ -255,10 +272,8 @@ public class HomeActivity extends Activity {
         startActivity(meetingActivityIntent);
     }
 
-    public void browseMapAction(View view){
-        Intent mapActivityIntent=new Intent(this,MeetingMapActivity.class);
-        mapActivityIntent.putExtra("Mode",1);
-        mapActivityIntent.putExtra("Keywords","");
+    public void contactUsAction(View view){
+        Intent mapActivityIntent=new Intent(this,ContactUsActivity.class);
         startActivity(mapActivityIntent);
     }
 }

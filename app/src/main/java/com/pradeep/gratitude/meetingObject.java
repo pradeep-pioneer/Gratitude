@@ -1,6 +1,7 @@
 package com.pradeep.gratitude;
 
 import android.database.Cursor;
+import android.hardware.camera2.params.StreamConfigurationMap;
 import android.location.Location;
 
 /**
@@ -18,9 +19,10 @@ public class meetingObject {
     Double _exactLat;
     Double _exactLng;
     Location _location;
-
+    String _formattedAddress;
     String _distance;
 
+    public String get_formattedAddress(){return _formattedAddress;}
     public String get_distance(){return _distance;}
 
     public void set_distance(String distance){_distance=distance;}
@@ -80,6 +82,7 @@ public class meetingObject {
         _contact=result.getString(result.getColumnIndex(meetingLocationsDbHelper.MEETINGS_COLUMN_CONTACT));
         _exactLat=result.getDouble(result.getColumnIndex(meetingLocationsDbHelper.MEETINGS_COLUMN_EXACT_LAT));
         _exactLng=result.getDouble(result.getColumnIndex(meetingLocationsDbHelper.MEETINGS_COLUMN_EXACT_LNG));
+        _formattedAddress=result.getString(result.getColumnIndex(meetingLocationsDbHelper.MEETINGS_COLUMN_FORMATTED_ADDRESS));
         _location=new Location("");
         _location.setLatitude(_exactLat);
         _location.setLongitude(_exactLng);
@@ -95,7 +98,8 @@ public class meetingObject {
             String dayTime,
             String contact,
             Double exactLat,
-            Double exactLng
+            Double exactLng,
+            String formattedAddress
     ){
         _id=id;
         _groupName=groupName;
@@ -110,6 +114,7 @@ public class meetingObject {
         _location=new Location("");
         _location.setLatitude(_exactLat);
         _location.setLongitude(_exactLng);
+        _formattedAddress = formattedAddress;
     }
 
     public meetingObject(String csvLine){
@@ -117,6 +122,7 @@ public class meetingObject {
         _id=Integer.parseInt(values[0].replace("\"",""));
         _groupName=values[1].replace("\"","");
         _address=values[2].replace("\"","");
+        _formattedAddress=values[9].replace("\"","");
         _area=values[3].replace("\"","");
         _state=values[4].replace("\"","");
         _postCode=values[5].replace("\"","");

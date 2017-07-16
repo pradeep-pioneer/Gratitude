@@ -8,8 +8,8 @@ android {
         applicationId "com.pradeep.gratitude"
         minSdkVersion 22
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "3"
     }
     buildTypes {
         release {
@@ -24,4 +24,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.android.gms:play-services-maps:11.0.2'
+    compile 'com.android.support:design:22.2.1'
 }

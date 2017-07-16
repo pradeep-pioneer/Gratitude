@@ -21,6 +21,7 @@ public class meetingLocationsDbHelper extends SQLiteOpenHelper {
     public static final String MEETINGS_COLUMN_ID = "id";
     public static final String MEETINGS_COLUMN_GROUPNAME = "groupname";
     public static final String MEETINGS_COLUMN_ADDRESS = "address";
+    public static final String MEETINGS_COLUMN_FORMATTED_ADDRESS = "formattedaddress";
     public static final String MEETINGS_COLUMN_AREA = "area";
     public static final String MEETINGS_COLUMN_STATE = "state";
     public static final String MEETINGS_COLUMN_POSTCODE = "postcode";
@@ -46,6 +47,7 @@ public class meetingLocationsDbHelper extends SQLiteOpenHelper {
         contentValues.put(MEETINGS_COLUMN_CONTACT,meeting.get_contact());
         contentValues.put(MEETINGS_COLUMN_EXACT_LAT,meeting.get_exactLat());
         contentValues.put(MEETINGS_COLUMN_EXACT_LNG,meeting.get_exactLng());
+        contentValues.put(MEETINGS_COLUMN_FORMATTED_ADDRESS, meeting.get_formattedAddress());
         db.insert(MEETINGS_TABLE_NAME,null,contentValues);
         return true;
     }
@@ -94,6 +96,7 @@ public class meetingLocationsDbHelper extends SQLiteOpenHelper {
             builder.append(" OR " + MEETINGS_COLUMN_AREA + " LIKE '%" + keywordsArray[i] + "%'");
             builder.append(" OR " + MEETINGS_COLUMN_STATE + " LIKE '%" + keywordsArray[i] + "%'");
             builder.append(" OR " + MEETINGS_COLUMN_POSTCODE + " LIKE '%" + keywordsArray[i] + "%'");
+            builder.append(" OR " + MEETINGS_COLUMN_FORMATTED_ADDRESS + " LIKE '%" + keywordsArray[i] + "%'");
             builder.append(" OR " + MEETINGS_COLUMN_CONTACT + " LIKE '%" + keywordsArray[i] + "%')");
         }
         ArrayList<meetingObject> meetings=new ArrayList<meetingObject>();
@@ -116,6 +119,7 @@ public class meetingLocationsDbHelper extends SQLiteOpenHelper {
                 + " (" + MEETINGS_COLUMN_ID + " integer"
                 + ", " + MEETINGS_COLUMN_GROUPNAME + " text"
                 + ", " + MEETINGS_COLUMN_ADDRESS + " text"
+                + ", " + MEETINGS_COLUMN_FORMATTED_ADDRESS + " text"
                 + ", " + MEETINGS_COLUMN_AREA + " text"
                 + ", " + MEETINGS_COLUMN_STATE + " text"
                 + ", " + MEETINGS_COLUMN_POSTCODE + " text"
