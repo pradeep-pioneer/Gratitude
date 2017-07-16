@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -44,7 +45,7 @@ public class MeetingsActivity extends Activity {
         tvLng.setText("Longitude: " + Double.toString(gps.getLongitude()));
         meetingLocationsDbHelper helper = new meetingLocationsDbHelper(this);
         final meetingsAdapter adapter;
-        Intent intent=getIntent();
+        final Intent intent=getIntent();
         int mode=intent.getIntExtra("Mode",0);
         ArrayList<meetingObject> meetings;
         if (mode==0){
@@ -59,6 +60,18 @@ public class MeetingsActivity extends Activity {
         tvMeetings.setText("Total Meetings: " + meetings.size());
         ListView list = (ListView) findViewById(R.id.lvMeetings);
         list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                meetingObject meeting = (meetingObject)adapterView.getItemAtPosition(i);
+                Intent meetingMapActivityIntent=new Intent(MeetingsActivity.this,MeetingMapActivity.class);
+                meetingMapActivityIntent.putExtra("group-name", meeting.get_groupName());
+                meetingMapActivityIntent.putExtra("address", meeting.get_formattedAddress());
+                meetingMapActivityIntent.putExtra("lat", meeting.get_exactLat());
+                meetingMapActivityIntent.putExtra("lng", meeting.get_exactLng());
+                startActivity(meetingMapActivityIntent);
+            }
+        });
     }
 
     private Location getGPS() {

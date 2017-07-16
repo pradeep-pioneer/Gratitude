@@ -29,30 +29,6 @@
         android:layout_marginTop="5dp"
         android:text="FormattedAddress: " />
 
-    <!--<TextView
-        android:id="@+id/tvArea"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="5dp"
-        android:text="Area: " />
-
-    <TextView
-        android:id="@+id/tvState"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="5dp"
-        android:text="State: " />
-
-    <TextView
-        android:id="@+id/tvPostCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="5dp"
-        android:text="Post Code: " />-->
-
     <TextView
         android:id="@+id/tvDayTime"
         android:layout_width="wrap_content"

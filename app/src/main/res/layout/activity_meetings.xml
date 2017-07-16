@@ -40,6 +40,7 @@
         android:background="@android:color/darker_gray"/>
     <ListView
         android:id="@+id/lvMeetings"
+        android:descendantFocusability="beforeDescendants"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
